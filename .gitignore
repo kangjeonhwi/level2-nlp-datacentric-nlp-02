@@ -1,7 +1,7 @@
 .vscode
 
-# data
-# !data/readme.*
+data
+!data/readme.*
 
 base
 baseline
