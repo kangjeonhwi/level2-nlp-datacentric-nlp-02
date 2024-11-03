@@ -38,7 +38,7 @@ def remove_pattern_if_exceeds(data, pattern, max_num = 0):
                         - 모음 : r'[ㅏ-ㅣ]'
                         - 영어 : r'[a-zA-Z]'
                         - 한자 : r'[\u4e00-\u9fff]'
-                        - 위에 해당되지 않는 것(others) :  
+                        - 위에 해당되지 않는 것(others) : "others"
     - max_num (int) : 허용되는 pattern의 최대 개수.
                       pattern이 이 값을 초과하면 모든 pattern 제거
     
