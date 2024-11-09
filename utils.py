@@ -20,6 +20,11 @@ def get_llm_result(dataframe, prompt, output_path, slice_word, max_tokens=50, te
     :param top_p: 상위 확률 샘플링 파라미터 (기본값: 0.95)
     :param model_name: 사용할 LLM 모델 이름 (기본값: 'yanolja/EEVE-Korean-Instruct-10.8B-v1.0')
     :return: 처리된 텍스트가 포함된 새로운 DataFrame
+
+    # 예시 사용법
+    df = pd.read_csv("input_data.csv")
+    output_path = "corrected_headlines.csv"
+    get_llm_result(df, PROMPT_TEMPLATE, output_path, "교정:")
     """
     # 토크나이저와 모델 초기화
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -82,8 +87,38 @@ PROMPT_TEMPLATE = """
 교정:
 """
 
-if __name__ == "__main__":
-    # 예시 사용법
-    df = pd.read_csv(os.path.join(DATA_DIR, "input_data.csv"))
-    output_path = os.path.join(OUTPUT_DIR, "corrected_headlines.csv")
-    get_llm_result(df, PROMPT_TEMPLATE, output_path, "교정:")
+def remove_outer_quotes(input_string):
+    """
+    문자열의 양 끝에 있는 따옴표를 제거하고 공백을 정리합니다.
+
+    이 함수는 입력된 문자열의 시작과 끝에 있는 작은따옴표(')와 큰따옴표(")를 모두 제거합니다.
+    또한 문자열의 앞뒤 공백도 제거합니다. 입력이 float 타입인 경우 공백 문자열을 반환합니다.
+
+    Parameters:
+    input_string (str or float): 처리할 입력 문자열 또는 float 값
+
+    Returns:
+    str: 따옴표와 앞뒤 공백이 제거된 문자열. 입력이 float인 경우 공백 문자열(' ') 반환.
+
+    Examples:
+    >>> remove_outer_quotes('"Hello, World!"')
+    'Hello, World!'
+    >>> remove_outer_quotes("'Python'")
+    'Python'
+    >>> remove_outer_quotes(' "  Spaces  " ')
+    'Spaces'
+    >>> remove_outer_quotes(3.14)
+    ' '
+    """
+    if type(input_string) == float:
+        return ' '
+    # 문자열의 앞뒤 공백을 제거
+    cleaned = input_string.strip()
+    
+    # 작은따옴표와 큰따옴표 확인
+    while cleaned.startswith('"') or cleaned.startswith("'"):
+        cleaned = cleaned[1:]
+    while cleaned.endswith('"') or cleaned.endswith("'"):
+        cleaned = cleaned[:-1]
+    
+    return cleaned
