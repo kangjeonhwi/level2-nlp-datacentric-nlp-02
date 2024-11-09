@@ -122,3 +122,35 @@ def remove_outer_quotes(input_string):
         cleaned = cleaned[:-1]
     
     return cleaned
+
+
+def merge_dataframes(df_list):
+    """
+    형식이 동일한 DataFrame들의 리스트를 받아 하나의 DataFrame으로 병합합니다.
+
+    Parameters:
+    df_list (list): 병합할 pandas DataFrame들의 리스트
+
+    Returns:
+    pd.DataFrame: 병합된 단일 DataFrame
+
+    Raises:
+    ValueError: 입력 리스트가 비어있거나 DataFrame들의 열이 서로 다른 경우 발생
+    """
+    # 빈 리스트 처리
+    if not df_list:
+        raise ValueError("입력 리스트가 비어 있습니다.")
+
+    # DataFrame 개수가 1개인 경우 바로 반환
+    if len(df_list) == 1:
+        return df_list[0]
+
+    # 모든 DataFrame의 열이 동일한지 확인
+    first_df_columns = df_list[0].columns
+    for df in df_list[1:]:
+        if not df.columns.equals(first_df_columns):
+            raise ValueError("모든 DataFrame의 열이 동일해야 합니다.")
+
+    # DataFrame 병합
+    merged_df = pd.concat(df_list, ignore_index=True)
+    return merged_df
