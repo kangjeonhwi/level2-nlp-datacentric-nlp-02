@@ -1,22 +1,3 @@
-"""
-LLM을 이용한 뉴스 헤드라인 정제 및 패러프레이징 스크립트
-
-이 스크립트는 노이즈가 포함된 뉴스 헤드라인 데이터를 LLM(Language Model)을 사용하여 정제하고 패러프레이징합니다.
-
-주요 기능:
-1. 입력된 CSV 파일에서 노이즈가 포함된 헤드라인을 읽어옵니다.
-2. LLM을 사용하여 각 헤드라인의 노이즈를 제거하고 자연스러운 형태로 복원합니다.
-3. 복원된 헤드라인을 최소한으로 수정하여 패러프레이징합니다.
-4. 정제 및 패러프레이징된 헤드라인을 새로운 CSV 파일로 저장합니다.
-
-사용된 주요 함수:
-- get_llm_result: LLM을 이용한 텍스트 처리
-- remove_outer_quotes: 문자열의 앞뒤 따옴표 제거
-"""
-
-from utils import get_llm_result, remove_outer_quotes
-import pandas as pd
-import os
 import torch
 from tqdm import tqdm
 import re
