@@ -4,9 +4,6 @@ import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-BASE_DIR = os.getcwd()
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'outputs')
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def get_llm_result(dataframe, prompt, output_path, slice_word, max_tokens=50, temperature=0.7, 
